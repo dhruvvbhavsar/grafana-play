@@ -1,0 +1,31 @@
+services:
+  grafana:
+    image: grafana/grafana:13.2.0
+    container_name: public-health-grafana
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GF_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GF_ADMIN_PASSWORD:?set GF_ADMIN_PASSWORD before starting}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_SERVER_ROOT_URL: ${GF_SERVER_ROOT_URL:-http://localhost:3000}
+      GF_SERVER_SERVE_FROM_SUB_PATH: "false"
+      GF_DASHBOARD_PATH: /etc/grafana/provisioning/dashboards
+      HIS_QA_DB_HOST: ${HIS_QA_DB_HOST:?set HIS_QA_DB_HOST before starting}
+      HIS_QA_DB_USER: ${HIS_QA_DB_USER:?set HIS_QA_DB_USER before starting}
+      HIS_QA_DB_NAME: ${HIS_QA_DB_NAME:?set HIS_QA_DB_NAME before starting}
+      HIS_QA_DB_SSLMODE: ${HIS_QA_DB_SSLMODE:-disable}
+      HIS_QA_DB_PASSWORD: ${HIS_QA_DB_PASSWORD:?set HIS_QA_DB_PASSWORD before starting}
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./provisioning:/etc/grafana/provisioning:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3000/api/health >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  grafana-data:

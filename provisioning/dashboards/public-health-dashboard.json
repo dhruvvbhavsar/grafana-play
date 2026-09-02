@@ -1,0 +1,331 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": { "type": "grafana", "uid": "-- Grafana --" },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Aggregate public-health view based on SELECT * FROM public.diagnosis_dashboard_data. The panels intentionally expose counts only.",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "id": 1,
+      "title": "Public Health Dashboard",
+      "type": "text",
+      "gridPos": { "h": 3, "w": 24, "x": 0, "y": 0 },
+      "options": {
+        "mode": "markdown",
+        "content": "# Public Health Dashboard\n\nDistrict disease tracker and patient-visit trends from the HIS-QA diagnosis dashboard data. Use the filters above and Grafana's time picker to explore the reporting period."
+      }
+    },
+    {
+      "id": 2,
+      "title": "Total Diagnosis Records",
+      "type": "stat",
+      "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 3 },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(*)::bigint AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "decimals": 0,
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "orange", "value": 50 }, { "color": "red", "value": 100 }] },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" }
+    },
+    {
+      "id": 3,
+      "title": "Unique Patients",
+      "type": "stat",
+      "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 3 },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(DISTINCT uhid_number)::bigint AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "color": { "mode": "fixed", "fixedColor": "blue" }, "decimals": 0, "unit": "short" }, "overrides": [] },
+      "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" }
+    },
+    {
+      "id": 4,
+      "title": "Districts Covered",
+      "type": "stat",
+      "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 3 },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(DISTINCT district_name)::bigint AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "color": { "mode": "fixed", "fixedColor": "orange" }, "decimals": 0, "unit": "short" }, "overrides": [] },
+      "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" }
+    },
+    {
+      "id": 5,
+      "title": "Latest Report",
+      "type": "stat",
+      "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+      "gridPos": { "h": 4, "w": 6, "x": 18, "y": 3 },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT to_char(MAX(created_date), 'DD Mon YYYY HH24:MI') AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "color": { "mode": "fixed", "fixedColor": "green" }, "unit": "string" }, "overrides": [] },
+      "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "center", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" }
+    },
+    {
+      "id": 6,
+      "title": "District Disease Tracker",
+      "type": "barchart",
+      "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 7 },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT district_name AS \"District\", COUNT(*) FILTER (WHERE is_communicable = 'Y')::bigint AS \"Communicable Diseases\", COUNT(*) FILTER (WHERE is_non_communicable = 'Y')::bigint AS \"Non-communicable Diseases\", COUNT(*) FILTER (WHERE is_notifiable = 'Y')::bigint AS \"Notifiable Diseases\", COUNT(*) FILTER (WHERE is_occupational_notifiable = 'Y')::bigint AS \"Occupational Diseases\", COUNT(*) FILTER (WHERE is_vector_borne = 'Y')::bigint AS \"Vector-borne Diseases\" FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY district_name ORDER BY district_name",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "decimals": 0, "min": 0, "unit": "short" }, "overrides": [] },
+      "options": { "barRadius": 0, "barWidthFactor": 0.7, "groupWidth": 0.7, "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true }, "orientation": "vertical", "showValue": "auto", "stacking": "none", "tooltip": { "mode": "multi", "sort": "desc" }, "xTickLabelRotation": 0, "xTickLabelSpacing": 0 }
+    },
+    {
+      "id": 7,
+      "title": "Patient Visits by Week",
+      "type": "barchart",
+      "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 7 },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT district_name AS \"District\", COUNT(*) FILTER (WHERE EXTRACT(DAY FROM created_date) BETWEEN 1 AND 7)::bigint AS \"1st Week\", COUNT(*) FILTER (WHERE EXTRACT(DAY FROM created_date) BETWEEN 8 AND 14)::bigint AS \"2nd Week\", COUNT(*) FILTER (WHERE EXTRACT(DAY FROM created_date) BETWEEN 15 AND 21)::bigint AS \"3rd Week\", COUNT(*) FILTER (WHERE EXTRACT(DAY FROM created_date) >= 22)::bigint AS \"4th Week\" FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY district_name ORDER BY district_name",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "decimals": 0, "min": 0, "unit": "short" }, "overrides": [] },
+      "options": { "barRadius": 0, "barWidthFactor": 0.7, "groupWidth": 0.7, "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true }, "orientation": "vertical", "showValue": "auto", "stacking": "none", "tooltip": { "mode": "multi", "sort": "desc" }, "xTickLabelRotation": 0, "xTickLabelSpacing": 0 }
+    },
+    {
+      "id": 8,
+      "title": "Communicable Diseases",
+      "type": "timeseries",
+      "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 16 },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT date_trunc('day', created_date) AS time, diagnosis_desc AS metric, COUNT(*)::double precision AS value FROM public.diagnosis_dashboard_data WHERE is_communicable = 'Y' AND $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1, 2 ORDER BY 1, 2",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "custom": { "drawStyle": "bars", "fillOpacity": 85, "lineWidth": 0, "showPoints": "never", "spanNulls": false }, "decimals": 0, "min": 0, "unit": "short" }, "overrides": [] },
+      "options": { "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "desc" }, "xAxis": { "axisPlacement": "auto", "show": true }, "yAxis": { "axisPlacement": "left", "min": 0, "show": true } }
+    },
+    {
+      "id": 9,
+      "title": "Non-communicable Diseases",
+      "type": "timeseries",
+      "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 16 },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT date_trunc('day', created_date) AS time, diagnosis_desc AS metric, COUNT(*)::double precision AS value FROM public.diagnosis_dashboard_data WHERE is_non_communicable = 'Y' AND $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1, 2 ORDER BY 1, 2",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "custom": { "drawStyle": "bars", "fillOpacity": 85, "lineWidth": 0, "showPoints": "never", "spanNulls": false }, "decimals": 0, "min": 0, "unit": "short" }, "overrides": [] },
+      "options": { "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "desc" }, "xAxis": { "axisPlacement": "auto", "show": true }, "yAxis": { "axisPlacement": "left", "min": 0, "show": true } }
+    },
+    {
+      "id": 10,
+      "title": "Notifiable Diseases",
+      "type": "timeseries",
+      "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 25 },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT date_trunc('day', created_date) AS time, diagnosis_desc AS metric, COUNT(*)::double precision AS value FROM public.diagnosis_dashboard_data WHERE is_notifiable = 'Y' AND $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1, 2 ORDER BY 1, 2",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "custom": { "drawStyle": "bars", "fillOpacity": 85, "lineWidth": 0, "showPoints": "never", "spanNulls": false }, "decimals": 0, "min": 0, "unit": "short" }, "overrides": [] },
+      "options": { "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "desc" }, "xAxis": { "axisPlacement": "auto", "show": true }, "yAxis": { "axisPlacement": "left", "min": 0, "show": true } }
+    },
+    {
+      "id": 11,
+      "title": "Occupational Diseases",
+      "type": "timeseries",
+      "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 25 },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT date_trunc('day', created_date) AS time, diagnosis_desc AS metric, COUNT(*)::double precision AS value FROM public.diagnosis_dashboard_data WHERE is_occupational_notifiable = 'Y' AND $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1, 2 ORDER BY 1, 2",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "custom": { "drawStyle": "bars", "fillOpacity": 85, "lineWidth": 0, "showPoints": "never", "spanNulls": false }, "decimals": 0, "min": 0, "unit": "short" }, "overrides": [] },
+      "options": { "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "desc" }, "xAxis": { "axisPlacement": "auto", "show": true }, "yAxis": { "axisPlacement": "left", "min": 0, "show": true } }
+    },
+    {
+      "id": 12,
+      "title": "Vector-borne Diseases",
+      "type": "timeseries",
+      "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 34 },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT date_trunc('day', created_date) AS time, diagnosis_desc AS metric, COUNT(*)::double precision AS value FROM public.diagnosis_dashboard_data WHERE is_vector_borne = 'Y' AND $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1, 2 ORDER BY 1, 2",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "custom": { "drawStyle": "bars", "fillOpacity": 85, "lineWidth": 0, "showPoints": "never", "spanNulls": false }, "decimals": 0, "min": 0, "unit": "short" }, "overrides": [] },
+      "options": { "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "desc" }, "xAxis": { "axisPlacement": "auto", "show": true }, "yAxis": { "axisPlacement": "left", "min": 0, "show": true } }
+    },
+    {
+      "id": 13,
+      "title": "All Diagnoses by Day",
+      "type": "timeseries",
+      "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 34 },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT date_trunc('day', created_date) AS time, diagnosis_desc AS metric, COUNT(*)::double precision AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1, 2 ORDER BY 1, 2",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "custom": { "drawStyle": "bars", "fillOpacity": 85, "lineWidth": 0, "showPoints": "never", "spanNulls": false }, "decimals": 0, "min": 0, "unit": "short" }, "overrides": [] },
+      "options": { "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "desc" }, "xAxis": { "axisPlacement": "auto", "show": true }, "yAxis": { "axisPlacement": "left", "min": 0, "show": true } }
+    }
+  ],
+  "refresh": "5m",
+  "schemaVersion": 39,
+  "tags": ["hospital", "public-health", "his-qa"],
+  "templating": {
+    "list": [
+      {
+        "allValue": "All",
+        "current": { "selected": true, "text": "All", "value": "$__all" },
+        "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+        "definition": "SELECT DISTINCT district_name AS __value, district_name AS __text FROM public.diagnosis_dashboard_data WHERE district_name IS NOT NULL ORDER BY 1",
+        "includeAll": true,
+        "label": "District",
+        "name": "district",
+        "options": [],
+        "query": "SELECT DISTINCT district_name AS __value, district_name AS __text FROM public.diagnosis_dashboard_data WHERE district_name IS NOT NULL ORDER BY 1",
+        "refresh": 2,
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "allValue": "All",
+        "current": { "selected": true, "text": "All", "value": "$__all" },
+        "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+        "definition": "SELECT DISTINCT unit_name AS __value, unit_name AS __text FROM public.diagnosis_dashboard_data WHERE unit_name IS NOT NULL ORDER BY 1",
+        "includeAll": true,
+        "label": "Unit",
+        "name": "unit",
+        "options": [],
+        "query": "SELECT DISTINCT unit_name AS __value, unit_name AS __text FROM public.diagnosis_dashboard_data WHERE unit_name IS NOT NULL ORDER BY 1",
+        "refresh": 2,
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "allValue": "All",
+        "current": { "selected": true, "text": "All", "value": "$__all" },
+        "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+        "definition": "SELECT DISTINCT to_char(created_date, 'YYYY') AS __value, to_char(created_date, 'YYYY') AS __text FROM public.diagnosis_dashboard_data ORDER BY 1 DESC",
+        "includeAll": true,
+        "label": "Calendar Year",
+        "name": "year",
+        "options": [],
+        "query": "SELECT DISTINCT to_char(created_date, 'YYYY') AS __value, to_char(created_date, 'YYYY') AS __text FROM public.diagnosis_dashboard_data ORDER BY 1 DESC",
+        "refresh": 2,
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "allValue": "All",
+        "current": { "selected": true, "text": "All", "value": "$__all" },
+        "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+        "definition": "SELECT DISTINCT to_char(created_date, 'YYYY-MM') AS __value, to_char(created_date, 'Mon YYYY') AS __text FROM public.diagnosis_dashboard_data ORDER BY 1 DESC",
+        "includeAll": true,
+        "label": "Month",
+        "name": "month",
+        "options": [],
+        "query": "SELECT DISTINCT to_char(created_date, 'YYYY-MM') AS __value, to_char(created_date, 'Mon YYYY') AS __text FROM public.diagnosis_dashboard_data ORDER BY 1 DESC",
+        "refresh": 2,
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      }
+    ]
+  },
+  "time": { "from": "now-90d", "to": "now" },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Public Health Dashboard",
+  "uid": "public-health-dashboard",
+  "version": 1,
+  "weekStart": ""
+}
