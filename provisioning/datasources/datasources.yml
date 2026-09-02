@@ -12,6 +12,7 @@ datasources:
     secureJsonData:
       password: $__env{HIS_QA_DB_PASSWORD}
     jsonData:
+      database: $__env{HIS_QA_DB_NAME}
       postgresVersion: 1600
       sslmode: $__env{HIS_QA_DB_SSLMODE}
       timescaledb: false
