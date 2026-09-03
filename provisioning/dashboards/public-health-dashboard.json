@@ -12,21 +12,21 @@
       }
     ]
   },
-  "description": "Aggregate public-health view based on SELECT * FROM public.diagnosis_dashboard_data. The panels intentionally expose counts only.",
+  "description": "Executive public-health overview based on public.diagnosis_dashboard_data. The panels intentionally expose aggregate counts only.",
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "graphTooltip": 1,
+  "graphTooltip": 2,
   "id": null,
   "links": [],
   "panels": [
     {
       "id": 1,
-      "title": "Public Health Dashboard",
+      "title": "Public Health Executive Overview",
       "type": "text",
-      "gridPos": { "h": 3, "w": 24, "x": 0, "y": 0 },
+      "gridPos": { "h": 4, "w": 24, "x": 0, "y": 0 },
       "options": {
         "mode": "markdown",
-        "content": "# Public Health Dashboard\n\nDistrict disease tracker and patient-visit trends from the HIS-QA diagnosis dashboard data. Use the filters above and Grafana's time picker to explore the reporting period."
+        "content": "# Public Health Executive Overview\n\nA clear view of diagnosis activity across districts and health units.\n\n**Data scope:** aggregate diagnosis records only  ·  **Source:** HIS-QA  ·  **Refresh:** every 5 minutes\n\nUse the filters and time picker above to focus the reporting period."
       }
     },
     {
@@ -34,7 +34,7 @@
       "title": "Total Diagnosis Records",
       "type": "stat",
       "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
-      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 3 },
+      "gridPos": { "h": 5, "w": 4, "x": 0, "y": 4 },
       "targets": [
         {
           "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
@@ -53,14 +53,14 @@
         },
         "overrides": []
       },
-      "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" }
+      "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "center", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "value_and_name" }
     },
     {
       "id": 3,
       "title": "Unique Patients",
       "type": "stat",
       "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
-      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 3 },
+      "gridPos": { "h": 5, "w": 4, "x": 4, "y": 4 },
       "targets": [
         {
           "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
@@ -71,14 +71,14 @@
         }
       ],
       "fieldConfig": { "defaults": { "color": { "mode": "fixed", "fixedColor": "blue" }, "decimals": 0, "unit": "short" }, "overrides": [] },
-      "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" }
+      "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "center", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "value_and_name" }
     },
     {
       "id": 4,
       "title": "Districts Covered",
       "type": "stat",
       "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
-      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 3 },
+      "gridPos": { "h": 5, "w": 4, "x": 8, "y": 4 },
       "targets": [
         {
           "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
@@ -89,14 +89,14 @@
         }
       ],
       "fieldConfig": { "defaults": { "color": { "mode": "fixed", "fixedColor": "orange" }, "decimals": 0, "unit": "short" }, "overrides": [] },
-      "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" }
+      "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "center", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "value_and_name" }
     },
     {
       "id": 5,
       "title": "Latest Report",
       "type": "stat",
       "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
-      "gridPos": { "h": 4, "w": 6, "x": 18, "y": 3 },
+      "gridPos": { "h": 5, "w": 4, "x": 20, "y": 4 },
       "targets": [
         {
           "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
@@ -107,14 +107,82 @@
         }
       ],
       "fieldConfig": { "defaults": { "color": { "mode": "fixed", "fixedColor": "green" }, "unit": "string" }, "overrides": [] },
-      "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "center", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "auto" }
+      "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "center", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "value_and_name" }
+    },
+    {
+      "id": 14,
+      "title": "Active Health Units",
+      "type": "stat",
+      "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+      "gridPos": { "h": 5, "w": 4, "x": 12, "y": 4 },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(DISTINCT unit_name)::bigint AS value FROM public.diagnosis_dashboard_data WHERE unit_name IS NOT NULL AND $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "color": { "mode": "fixed", "fixedColor": "purple" }, "decimals": 0, "unit": "short" }, "overrides": [] },
+      "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "center", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "value_and_name" }
+    },
+    {
+      "id": 15,
+      "title": "Top District",
+      "type": "stat",
+      "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+      "gridPos": { "h": 5, "w": 4, "x": 16, "y": 4 },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT district_name AS value FROM public.diagnosis_dashboard_data WHERE district_name IS NOT NULL AND $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY district_name ORDER BY COUNT(*) DESC, district_name LIMIT 1",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "color": { "mode": "fixed", "fixedColor": "magenta" }, "unit": "string" }, "overrides": [] },
+      "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "center", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "textMode": "value_and_name" }
+    },
+    {
+      "id": 16,
+      "title": "Weekly Diagnosis Activity",
+      "type": "timeseries",
+      "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+      "gridPos": { "h": 7, "w": 24, "x": 0, "y": 9 },
+      "targets": [
+        {
+          "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT date_trunc('week', created_date) AS time, COUNT(*)::double precision AS \"Diagnosis Records\" FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1 ORDER BY 1",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "fixed", "fixedColor": "green" },
+          "custom": { "drawStyle": "line", "fillOpacity": 24, "gradientMode": "opacity", "lineInterpolation": "smooth", "lineWidth": 2, "showPoints": "never", "spanNulls": true },
+          "decimals": 0,
+          "min": 0,
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true },
+        "tooltip": { "mode": "single", "sort": "desc" },
+        "xAxis": { "axisPlacement": "auto", "show": true },
+        "yAxis": { "axisPlacement": "left", "min": 0, "show": true }
+      }
     },
     {
       "id": 6,
       "title": "District Disease Tracker",
       "type": "barchart",
       "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
-      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 7 },
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 16 },
       "targets": [
         {
           "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
@@ -132,7 +200,7 @@
       "title": "Patient Visits by Week",
       "type": "barchart",
       "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
-      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 7 },
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 16 },
       "targets": [
         {
           "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
@@ -150,7 +218,7 @@
       "title": "Communicable Diseases",
       "type": "timeseries",
       "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
-      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 16 },
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 25 },
       "targets": [
         {
           "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
@@ -168,7 +236,7 @@
       "title": "Non-communicable Diseases",
       "type": "timeseries",
       "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
-      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 16 },
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 25 },
       "targets": [
         {
           "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
@@ -186,7 +254,7 @@
       "title": "Notifiable Diseases",
       "type": "timeseries",
       "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
-      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 25 },
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 34 },
       "targets": [
         {
           "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
@@ -204,7 +272,7 @@
       "title": "Occupational Diseases",
       "type": "timeseries",
       "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
-      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 25 },
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 34 },
       "targets": [
         {
           "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
@@ -222,7 +290,7 @@
       "title": "Vector-borne Diseases",
       "type": "timeseries",
       "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
-      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 34 },
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 43 },
       "targets": [
         {
           "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
@@ -240,7 +308,7 @@
       "title": "All Diagnoses by Day",
       "type": "timeseries",
       "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
-      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 34 },
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 43 },
       "targets": [
         {
           "datasource": { "type": "postgres", "uid": "his-qa-postgres" },
