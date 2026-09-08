@@ -61,7 +61,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COUNT(*) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND (${district:sqlstring} = 'All' OR district_name = ${district:sqlstring}) AND (${unit:sqlstring} = 'All' OR unit_name = ${unit:sqlstring}) AND (${year:sqlstring} = 'All' OR to_char(created_date, 'YYYY') = ${year:sqlstring}) AND (${month:sqlstring} = 'All' OR to_char(created_date, 'YYYY-MM') = ${month:sqlstring})",
+          "rawSql": "SELECT COUNT(*) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
           "rawQuery": true,
           "format": "table"
         }
@@ -118,7 +118,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COUNT(DISTINCT NULLIF(uhid_number, '')) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND (${district:sqlstring} = 'All' OR district_name = ${district:sqlstring}) AND (${unit:sqlstring} = 'All' OR unit_name = ${unit:sqlstring}) AND (${year:sqlstring} = 'All' OR to_char(created_date, 'YYYY') = ${year:sqlstring}) AND (${month:sqlstring} = 'All' OR to_char(created_date, 'YYYY-MM') = ${month:sqlstring})",
+          "rawSql": "SELECT COUNT(DISTINCT NULLIF(uhid_number, '')) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
           "rawQuery": true,
           "format": "table"
         }
@@ -175,7 +175,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COUNT(DISTINCT NULLIF(encounter_number, '')) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND (${district:sqlstring} = 'All' OR district_name = ${district:sqlstring}) AND (${unit:sqlstring} = 'All' OR unit_name = ${unit:sqlstring}) AND (${year:sqlstring} = 'All' OR to_char(created_date, 'YYYY') = ${year:sqlstring}) AND (${month:sqlstring} = 'All' OR to_char(created_date, 'YYYY-MM') = ${month:sqlstring})",
+          "rawSql": "SELECT COUNT(DISTINCT NULLIF(encounter_number, '')) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
           "rawQuery": true,
           "format": "table"
         }
@@ -232,7 +232,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COUNT(DISTINCT NULLIF(district_name, '')) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND (${district:sqlstring} = 'All' OR district_name = ${district:sqlstring}) AND (${unit:sqlstring} = 'All' OR unit_name = ${unit:sqlstring}) AND (${year:sqlstring} = 'All' OR to_char(created_date, 'YYYY') = ${year:sqlstring}) AND (${month:sqlstring} = 'All' OR to_char(created_date, 'YYYY-MM') = ${month:sqlstring})",
+          "rawSql": "SELECT COUNT(DISTINCT NULLIF(district_name, '')) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
           "rawQuery": true,
           "format": "table"
         }
@@ -289,7 +289,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COUNT(DISTINCT NULLIF(unit_name, '')) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND (${district:sqlstring} = 'All' OR district_name = ${district:sqlstring}) AND (${unit:sqlstring} = 'All' OR unit_name = ${unit:sqlstring}) AND (${year:sqlstring} = 'All' OR to_char(created_date, 'YYYY') = ${year:sqlstring}) AND (${month:sqlstring} = 'All' OR to_char(created_date, 'YYYY-MM') = ${month:sqlstring})",
+          "rawSql": "SELECT COUNT(DISTINCT NULLIF(unit_name, '')) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
           "rawQuery": true,
           "format": "table"
         }
@@ -346,7 +346,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COUNT(DISTINCT NULLIF(diagnosis_desc, '')) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND (${district:sqlstring} = 'All' OR district_name = ${district:sqlstring}) AND (${unit:sqlstring} = 'All' OR unit_name = ${unit:sqlstring}) AND (${year:sqlstring} = 'All' OR to_char(created_date, 'YYYY') = ${year:sqlstring}) AND (${month:sqlstring} = 'All' OR to_char(created_date, 'YYYY-MM') = ${month:sqlstring})",
+          "rawSql": "SELECT COUNT(DISTINCT NULLIF(diagnosis_desc, '')) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
           "rawQuery": true,
           "format": "table"
         }
@@ -420,7 +420,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "WITH days AS (SELECT generate_series(date_trunc('day', $__timeFrom()::timestamp), date_trunc('day', $__timeTo()::timestamp), interval '1 day') AS time), counts AS (SELECT date_trunc('day',created_date) AS time, COUNT(*)::float AS records, COUNT(DISTINCT uhid_number)::float AS patients FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND (${district:sqlstring} = 'All' OR district_name = ${district:sqlstring}) AND (${unit:sqlstring} = 'All' OR unit_name = ${unit:sqlstring}) AND (${year:sqlstring} = 'All' OR to_char(created_date, 'YYYY') = ${year:sqlstring}) AND (${month:sqlstring} = 'All' OR to_char(created_date, 'YYYY-MM') = ${month:sqlstring}) GROUP BY 1) SELECT days.time, COALESCE(records,0) AS \"Diagnosis records\", COALESCE(patients,0) AS \"Daily unique patients\" FROM days LEFT JOIN counts USING(time) ORDER BY 1",
+          "rawSql": "WITH days AS (SELECT generate_series(date_trunc('day', $__timeFrom()::timestamp), date_trunc('day', $__timeTo()::timestamp), interval '1 day') AS time), counts AS (SELECT date_trunc('day',created_date) AS time, COUNT(*)::float AS records, COUNT(DISTINCT uhid_number)::float AS patients FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1) SELECT days.time, COALESCE(records,0) AS \"Diagnosis records\", COALESCE(patients,0) AS \"Daily unique patients\" FROM days LEFT JOIN counts USING(time) ORDER BY 1",
           "rawQuery": true,
           "format": "time_series"
         }
@@ -484,7 +484,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "WITH c AS (SELECT COUNT(*) FILTER (WHERE $__timeFilter(created_date))::float AS current, COUNT(*) FILTER (WHERE created_date >= $__timeFrom()::timestamp - ($__timeTo()::timestamp - $__timeFrom()::timestamp) AND created_date < $__timeFrom()::timestamp)::float AS previous FROM public.diagnosis_dashboard_data WHERE (${district:sqlstring} = 'All' OR district_name = ${district:sqlstring}) AND (${unit:sqlstring} = 'All' OR unit_name = ${unit:sqlstring}) AND (${year:sqlstring} = 'All' OR to_char(created_date, 'YYYY') = ${year:sqlstring}) AND (${month:sqlstring} = 'All' OR to_char(created_date, 'YYYY-MM') = ${month:sqlstring}) AND created_date >= $__timeFrom()::timestamp - ($__timeTo()::timestamp - $__timeFrom()::timestamp) AND created_date <= $__timeTo()::timestamp) SELECT 100.0*(current-previous)/NULLIF(previous,0) AS value FROM c",
+          "rawSql": "WITH c AS (SELECT COUNT(*) FILTER (WHERE $__timeFilter(created_date))::float AS current, COUNT(*) FILTER (WHERE created_date >= $__timeFrom()::timestamp - ($__timeTo()::timestamp - $__timeFrom()::timestamp) AND created_date < $__timeFrom()::timestamp)::float AS previous FROM public.diagnosis_dashboard_data WHERE ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') AND created_date >= $__timeFrom()::timestamp - ($__timeTo()::timestamp - $__timeFrom()::timestamp) AND created_date <= $__timeTo()::timestamp) SELECT 100.0*(current-previous)/NULLIF(previous,0) AS value FROM c",
           "rawQuery": true,
           "format": "table"
         }
@@ -540,7 +540,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT to_char(MAX(created_date),'DD Mon YYYY HH24:MI') AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND (${district:sqlstring} = 'All' OR district_name = ${district:sqlstring}) AND (${unit:sqlstring} = 'All' OR unit_name = ${unit:sqlstring}) AND (${year:sqlstring} = 'All' OR to_char(created_date, 'YYYY') = ${year:sqlstring}) AND (${month:sqlstring} = 'All' OR to_char(created_date, 'YYYY-MM') = ${month:sqlstring})",
+          "rawSql": "SELECT to_char(MAX(created_date),'DD Mon YYYY HH24:MI') AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
           "rawQuery": true,
           "format": "table"
         }
@@ -614,7 +614,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COALESCE(NULLIF(district_name,''),'Unknown') AS label, COUNT(*)::bigint AS \"Records\" FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND (${district:sqlstring} = 'All' OR district_name = ${district:sqlstring}) AND (${unit:sqlstring} = 'All' OR unit_name = ${unit:sqlstring}) AND (${year:sqlstring} = 'All' OR to_char(created_date, 'YYYY') = ${year:sqlstring}) AND (${month:sqlstring} = 'All' OR to_char(created_date, 'YYYY-MM') = ${month:sqlstring}) GROUP BY 1 ORDER BY 2 DESC,1 LIMIT 10",
+          "rawSql": "SELECT COALESCE(NULLIF(district_name,''),'Unknown') AS label, COUNT(*)::bigint AS \"Records\" FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1 ORDER BY 2 DESC,1 LIMIT 10",
           "rawQuery": true,
           "format": "table"
         }
@@ -670,7 +670,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COALESCE(NULLIF(diagnosis_desc,''),'Unknown') AS label, COUNT(*)::bigint AS \"Records\" FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND (${district:sqlstring} = 'All' OR district_name = ${district:sqlstring}) AND (${unit:sqlstring} = 'All' OR unit_name = ${unit:sqlstring}) AND (${year:sqlstring} = 'All' OR to_char(created_date, 'YYYY') = ${year:sqlstring}) AND (${month:sqlstring} = 'All' OR to_char(created_date, 'YYYY-MM') = ${month:sqlstring}) GROUP BY 1 ORDER BY 2 DESC,1 LIMIT 10",
+          "rawSql": "SELECT COALESCE(NULLIF(diagnosis_desc,''),'Unknown') AS label, COUNT(*)::bigint AS \"Records\" FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1 ORDER BY 2 DESC,1 LIMIT 10",
           "rawQuery": true,
           "format": "table"
         }
@@ -743,7 +743,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COALESCE(NULLIF(gender_name,''),'Unknown') AS label, COUNT(*) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND (${district:sqlstring} = 'All' OR district_name = ${district:sqlstring}) AND (${unit:sqlstring} = 'All' OR unit_name = ${unit:sqlstring}) AND (${year:sqlstring} = 'All' OR to_char(created_date, 'YYYY') = ${year:sqlstring}) AND (${month:sqlstring} = 'All' OR to_char(created_date, 'YYYY-MM') = ${month:sqlstring}) GROUP BY 1 ORDER BY 2 DESC",
+          "rawSql": "SELECT COALESCE(NULLIF(gender_name,''),'Unknown') AS label, COUNT(*) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1 ORDER BY 2 DESC",
           "rawQuery": true,
           "format": "table"
         }
@@ -807,7 +807,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT CASE WHEN btrim(ageyear) ~ '^[0-9]+([.][0-9]+)?$' THEN CASE WHEN btrim(ageyear)::numeric < 18 THEN '0\u201317' WHEN btrim(ageyear)::numeric < 35 THEN '18\u201334' WHEN btrim(ageyear)::numeric < 60 THEN '35\u201359' WHEN btrim(ageyear)::numeric <= 120 THEN '60+' ELSE 'Unknown' END ELSE 'Unknown' END AS label,COUNT(*) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND (${district:sqlstring} = 'All' OR district_name = ${district:sqlstring}) AND (${unit:sqlstring} = 'All' OR unit_name = ${unit:sqlstring}) AND (${year:sqlstring} = 'All' OR to_char(created_date, 'YYYY') = ${year:sqlstring}) AND (${month:sqlstring} = 'All' OR to_char(created_date, 'YYYY-MM') = ${month:sqlstring}) GROUP BY 1 ORDER BY 1",
+          "rawSql": "SELECT CASE WHEN btrim(ageyear) ~ '^[0-9]+([.][0-9]+)?$' THEN CASE WHEN btrim(ageyear)::numeric < 18 THEN '0\u201317' WHEN btrim(ageyear)::numeric < 35 THEN '18\u201334' WHEN btrim(ageyear)::numeric < 60 THEN '35\u201359' WHEN btrim(ageyear)::numeric <= 120 THEN '60+' ELSE 'Unknown' END ELSE 'Unknown' END AS label,COUNT(*) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1 ORDER BY 1",
           "rawQuery": true,
           "format": "table"
         }
@@ -863,7 +863,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COALESCE(NULLIF(speciality_name,''),'Unknown') AS label,COUNT(*) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND (${district:sqlstring} = 'All' OR district_name = ${district:sqlstring}) AND (${unit:sqlstring} = 'All' OR unit_name = ${unit:sqlstring}) AND (${year:sqlstring} = 'All' OR to_char(created_date, 'YYYY') = ${year:sqlstring}) AND (${month:sqlstring} = 'All' OR to_char(created_date, 'YYYY-MM') = ${month:sqlstring}) GROUP BY 1 ORDER BY 2 DESC LIMIT 8",
+          "rawSql": "SELECT COALESCE(NULLIF(speciality_name,''),'Unknown') AS label,COUNT(*) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1 ORDER BY 2 DESC LIMIT 8",
           "rawQuery": true,
           "format": "table"
         }
@@ -936,7 +936,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "WITH selected AS (SELECT * FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND (${district:sqlstring} = 'All' OR district_name = ${district:sqlstring}) AND (${unit:sqlstring} = 'All' OR unit_name = ${unit:sqlstring}) AND (${year:sqlstring} = 'All' OR to_char(created_date, 'YYYY') = ${year:sqlstring}) AND (${month:sqlstring} = 'All' OR to_char(created_date, 'YYYY-MM') = ${month:sqlstring})) SELECT 'Communicable' AS label,COUNT(*) FILTER (WHERE is_communicable='Y') AS value FROM selected UNION ALL SELECT 'Non-communicable' AS label,COUNT(*) FILTER (WHERE is_non_communicable='Y') AS value FROM selected UNION ALL SELECT 'Notifiable' AS label,COUNT(*) FILTER (WHERE is_notifiable='Y') AS value FROM selected UNION ALL SELECT 'Vector-borne' AS label,COUNT(*) FILTER (WHERE is_vector_borne='Y') AS value FROM selected UNION ALL SELECT 'Occupational' AS label,COUNT(*) FILTER (WHERE is_occupational_notifiable='Y') AS value FROM selected",
+          "rawSql": "WITH selected AS (SELECT * FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')) SELECT 'Communicable' AS label,COUNT(*) FILTER (WHERE is_communicable='Y') AS value FROM selected UNION ALL SELECT 'Non-communicable' AS label,COUNT(*) FILTER (WHERE is_non_communicable='Y') AS value FROM selected UNION ALL SELECT 'Notifiable' AS label,COUNT(*) FILTER (WHERE is_notifiable='Y') AS value FROM selected UNION ALL SELECT 'Vector-borne' AS label,COUNT(*) FILTER (WHERE is_vector_borne='Y') AS value FROM selected UNION ALL SELECT 'Occupational' AS label,COUNT(*) FILTER (WHERE is_occupational_notifiable='Y') AS value FROM selected",
           "rawQuery": true,
           "format": "table"
         }
@@ -992,7 +992,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT date_trunc('day',created_date) AS time,COUNT(*) FILTER (WHERE is_communicable='Y')::float AS \"Communicable\", COUNT(*) FILTER (WHERE is_non_communicable='Y')::float AS \"Non-communicable\", COUNT(*) FILTER (WHERE is_notifiable='Y')::float AS \"Notifiable\", COUNT(*) FILTER (WHERE is_vector_borne='Y')::float AS \"Vector-borne\", COUNT(*) FILTER (WHERE is_occupational_notifiable='Y')::float AS \"Occupational\" FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND (${district:sqlstring} = 'All' OR district_name = ${district:sqlstring}) AND (${unit:sqlstring} = 'All' OR unit_name = ${unit:sqlstring}) AND (${year:sqlstring} = 'All' OR to_char(created_date, 'YYYY') = ${year:sqlstring}) AND (${month:sqlstring} = 'All' OR to_char(created_date, 'YYYY-MM') = ${month:sqlstring}) GROUP BY 1 ORDER BY 1",
+          "rawSql": "SELECT date_trunc('day',created_date) AS time,COUNT(*) FILTER (WHERE is_communicable='Y')::float AS \"Communicable\", COUNT(*) FILTER (WHERE is_non_communicable='Y')::float AS \"Non-communicable\", COUNT(*) FILTER (WHERE is_notifiable='Y')::float AS \"Notifiable\", COUNT(*) FILTER (WHERE is_vector_borne='Y')::float AS \"Vector-borne\", COUNT(*) FILTER (WHERE is_occupational_notifiable='Y')::float AS \"Occupational\" FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1 ORDER BY 1",
           "rawQuery": true,
           "format": "time_series"
         }
@@ -1073,7 +1073,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COUNT(*) FILTER (WHERE NULLIF(btrim(district_name),'') IS NULL) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND (${district:sqlstring} = 'All' OR district_name = ${district:sqlstring}) AND (${unit:sqlstring} = 'All' OR unit_name = ${unit:sqlstring}) AND (${year:sqlstring} = 'All' OR to_char(created_date, 'YYYY') = ${year:sqlstring}) AND (${month:sqlstring} = 'All' OR to_char(created_date, 'YYYY-MM') = ${month:sqlstring})",
+          "rawSql": "SELECT COUNT(*) FILTER (WHERE NULLIF(btrim(district_name),'') IS NULL) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
           "rawQuery": true,
           "format": "table"
         }
@@ -1130,7 +1130,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COUNT(*) FILTER (WHERE NULLIF(btrim(gender_name),'') IS NULL) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND (${district:sqlstring} = 'All' OR district_name = ${district:sqlstring}) AND (${unit:sqlstring} = 'All' OR unit_name = ${unit:sqlstring}) AND (${year:sqlstring} = 'All' OR to_char(created_date, 'YYYY') = ${year:sqlstring}) AND (${month:sqlstring} = 'All' OR to_char(created_date, 'YYYY-MM') = ${month:sqlstring})",
+          "rawSql": "SELECT COUNT(*) FILTER (WHERE NULLIF(btrim(gender_name),'') IS NULL) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
           "rawQuery": true,
           "format": "table"
         }
@@ -1187,7 +1187,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COUNT(*) FILTER (WHERE NULLIF(btrim(diagnosis_desc),'') IS NULL) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND (${district:sqlstring} = 'All' OR district_name = ${district:sqlstring}) AND (${unit:sqlstring} = 'All' OR unit_name = ${unit:sqlstring}) AND (${year:sqlstring} = 'All' OR to_char(created_date, 'YYYY') = ${year:sqlstring}) AND (${month:sqlstring} = 'All' OR to_char(created_date, 'YYYY-MM') = ${month:sqlstring})",
+          "rawSql": "SELECT COUNT(*) FILTER (WHERE NULLIF(btrim(diagnosis_desc),'') IS NULL) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
           "rawQuery": true,
           "format": "table"
         }
@@ -1330,6 +1330,6 @@
   "timezone": "browser",
   "title": "Public Health Dashboard",
   "uid": "public-health-dashboard",
-  "version": 2,
+  "version": 3,
   "weekStart": ""
 }

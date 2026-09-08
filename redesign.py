@@ -5,7 +5,7 @@ from pathlib import Path
 path = Path(__file__).parent / 'provisioning/dashboards/public-health-dashboard.json'
 d = json.loads(path.read_text())
 ds = {'type': 'postgres', 'uid': 'his-qa-postgres'}
-filters = " AND ".join(f"(${{{v}:sqlstring}} = 'All' OR {col} = ${{{v}:sqlstring}})" for v, col in [('district','district_name'),('unit','unit_name'),('year',"to_char(created_date, 'YYYY')"),('month',"to_char(created_date, 'YYYY-MM')")])
+filters = " AND ".join(f"('${{{v}}}' = 'All' OR {col} = '${{{v}}}')" for v, col in [('district','district_name'),('unit','unit_name'),('year',"to_char(created_date, 'YYYY')"),('month',"to_char(created_date, 'YYYY-MM')")])
 where = '$__timeFilter(created_date) AND ' + filters
 source = 'public.diagnosis_dashboard_data'
 panels = []
