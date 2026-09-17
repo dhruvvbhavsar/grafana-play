@@ -1,6 +1,6 @@
 # Public Health Dashboard
 
-This repository contains one Grafana dashboard backed by the HIS-QA
+This repository contains one Grafana dashboard backed by the HIS-AAROGYAHUB
 PostgreSQL database. It does not include the old demo Prometheus stack or the
 synthetic Python telemetry service.
 
@@ -16,7 +16,7 @@ health numbers.
 
 ## Recommended deployment: Docker Compose
 
-Run Grafana on a small VM or internal server that can reach the HIS-QA
+Run Grafana on a small VM or internal server that can reach the HIS-AAROGYAHUB
 PostgreSQL endpoint. Put it behind an HTTPS reverse proxy or private VPN for
 production use.
 
@@ -26,11 +26,12 @@ production use.
    these values.
 
 ```bash
-export HIS_QA_DB_HOST='<database-host>:<database-port>'
-export HIS_QA_DB_USER='<database-user>'
-export HIS_QA_DB_NAME='<database-name>'
-export HIS_QA_DB_SSLMODE='disable'
-export HIS_QA_DB_PASSWORD='<database-password>'
+export HIS_AAROGYAHUB_DB1_HOST='<database-host>'
+export HIS_AAROGYAHUB_DB1_PORT='<database-port>'
+export HIS_AAROGYAHUB_DB1_USER='<database-user>'
+export HIS_AAROGYAHUB_DB1_NAME='<database-name>'
+export HIS_AAROGYAHUB_DB1_SSLMODE='require'
+export HIS_AAROGYAHUB_DB1_PASSWORD='<database-password>'
 export GF_ADMIN_PASSWORD='<strong-grafana-admin-password>'
 ```
 
@@ -43,9 +44,10 @@ docker compose up -d
 Grafana will be available on port `3000`. The dashboard and datasource are
 provisioned automatically from the mounted `provisioning` directory.
 
-The current HIS-QA endpoint accepts PostgreSQL `sslmode: disable`. For
-production, use a private network or VPN and enable TLS on the database if the
-server supports it.
+The deployment requires encrypted PostgreSQL connections (`sslmode: require`).
+This encrypts transport but does not verify server identity. Use `verify-full`
+with a trusted CA and matching DNS name when available. Prefer a dedicated
+read-only Grafana database account; the refresh worker needs procedure execution.
 
 Useful operations:
 
@@ -61,11 +63,12 @@ If Grafana is already installed locally, the included launcher starts only
 Grafana:
 
 ```bash
-export HIS_QA_DB_HOST='<database-host>:<database-port>'
-export HIS_QA_DB_USER='<database-user>'
-export HIS_QA_DB_NAME='<database-name>'
-export HIS_QA_DB_SSLMODE='disable'
-export HIS_QA_DB_PASSWORD='<the supplied HIS-QA password>'
+export HIS_AAROGYAHUB_DB1_HOST='<database-host>'
+export HIS_AAROGYAHUB_DB1_PORT='<database-port>'
+export HIS_AAROGYAHUB_DB1_USER='<database-user>'
+export HIS_AAROGYAHUB_DB1_NAME='<database-name>'
+export HIS_AAROGYAHUB_DB1_SSLMODE='require'
+export HIS_AAROGYAHUB_DB1_PASSWORD='<the supplied HIS-AAROGYAHUB password>'
 ./run.sh
 ```
 

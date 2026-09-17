@@ -8,12 +8,14 @@ BREW="$(brew --prefix)"
 LOG_DIR="$ROOT/.logs"
 mkdir -p "$LOG_DIR"
 
-for variable in HIS_QA_DB_HOST HIS_QA_DB_USER HIS_QA_DB_NAME HIS_QA_DB_SSLMODE HIS_QA_DB_PASSWORD; do
+for variable in HIS_AAROGYAHUB_DB1_HOST HIS_AAROGYAHUB_DB1_PORT HIS_AAROGYAHUB_DB1_USER HIS_AAROGYAHUB_DB1_NAME HIS_AAROGYAHUB_DB1_SSLMODE HIS_AAROGYAHUB_DB1_PASSWORD; do
   if [ -z "${!variable:-}" ]; then
     echo "ERROR: set $variable before starting Grafana." >&2
     exit 1
   fi
 done
+
+export HIS_AAROGYAHUB_DB1_HOST="${HIS_AAROGYAHUB_DB1_HOST}:${HIS_AAROGYAHUB_DB1_PORT}"
 
 GRAFANA_BIN="$BREW/opt/grafana/bin/grafana"
 GRAFANA_ARGS=(server --homepath="$BREW/opt/grafana/share/grafana")

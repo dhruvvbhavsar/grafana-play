@@ -12,11 +12,11 @@ services:
       GF_SERVER_ROOT_URL: ${GF_SERVER_ROOT_URL:-http://localhost:3000}
       GF_SERVER_SERVE_FROM_SUB_PATH: "false"
       GF_DASHBOARD_PATH: /etc/grafana/provisioning/dashboards
-      HIS_QA_DB_HOST: ${HIS_QA_DB_HOST:?set HIS_QA_DB_HOST before starting}
-      HIS_QA_DB_USER: ${HIS_QA_DB_USER:?set HIS_QA_DB_USER before starting}
-      HIS_QA_DB_NAME: ${HIS_QA_DB_NAME:?set HIS_QA_DB_NAME before starting}
-      HIS_QA_DB_SSLMODE: ${HIS_QA_DB_SSLMODE:-disable}
-      HIS_QA_DB_PASSWORD: ${HIS_QA_DB_PASSWORD:?set HIS_QA_DB_PASSWORD before starting}
+      HIS_AAROGYAHUB_DB1_HOST: ${HIS_AAROGYAHUB_DB1_HOST:?set HIS_AAROGYAHUB_DB1_HOST before starting}:${HIS_AAROGYAHUB_DB1_PORT:?set HIS_AAROGYAHUB_DB1_PORT before starting}
+      HIS_AAROGYAHUB_DB1_USER: ${HIS_AAROGYAHUB_DB1_USER:?set HIS_AAROGYAHUB_DB1_USER before starting}
+      HIS_AAROGYAHUB_DB1_NAME: ${HIS_AAROGYAHUB_DB1_NAME:?set HIS_AAROGYAHUB_DB1_NAME before starting}
+      HIS_AAROGYAHUB_DB1_SSLMODE: ${HIS_AAROGYAHUB_DB1_SSLMODE:-require}
+      HIS_AAROGYAHUB_DB1_PASSWORD: ${HIS_AAROGYAHUB_DB1_PASSWORD:?set HIS_AAROGYAHUB_DB1_PASSWORD before starting}
     volumes:
       - grafana-data:/var/lib/grafana
       - ./provisioning:/etc/grafana/provisioning:ro

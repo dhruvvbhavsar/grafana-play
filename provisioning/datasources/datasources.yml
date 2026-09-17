@@ -1,19 +1,19 @@
 apiVersion: 1
 
 datasources:
-  - name: HIS-QA PostgreSQL
+  - name: HIS-AAROGYAHUB PostgreSQL
     uid: his-qa-postgres
     type: postgres
     access: proxy
-    url: $__env{HIS_QA_DB_HOST}
-    user: $__env{HIS_QA_DB_USER}
-    database: $__env{HIS_QA_DB_NAME}
+    url: $__env{HIS_AAROGYAHUB_DB1_HOST}
+    user: $__env{HIS_AAROGYAHUB_DB1_USER}
+    database: $__env{HIS_AAROGYAHUB_DB1_NAME}
     isDefault: true
     secureJsonData:
-      password: $__env{HIS_QA_DB_PASSWORD}
+      password: $__env{HIS_AAROGYAHUB_DB1_PASSWORD}
     jsonData:
-      database: $__env{HIS_QA_DB_NAME}
+      database: $__env{HIS_AAROGYAHUB_DB1_NAME}
       postgresVersion: 1600
-      sslmode: $__env{HIS_QA_DB_SSLMODE}
+      sslmode: $__env{HIS_AAROGYAHUB_DB1_SSLMODE}
       timescaledb: false
     editable: true
