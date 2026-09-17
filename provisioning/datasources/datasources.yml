@@ -1,5 +1,11 @@
 apiVersion: 1
 
+# Grafana matches existing provisioned sources by name during migration.
+# Remove the legacy configuration before recreating the same stable UID.
+deleteDatasources:
+  - name: HIS-QA PostgreSQL
+    orgId: 1
+
 datasources:
   - name: HIS-AAROGYAHUB PostgreSQL
     uid: his-qa-postgres
