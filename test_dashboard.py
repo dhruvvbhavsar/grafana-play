@@ -34,13 +34,16 @@ class DashboardTests(unittest.TestCase):
         for title, flag in (('Provisional encounters', 'is_provisional'),
                             ('Final encounters', 'is_final')):
             sql = self.panels[title]['targets'][0]['rawSql']
-            self.assertIn('COUNT(DISTINCT encounter_id)', sql)
-            self.assertIn(flag, sql)
-            self.assertIn(visit_sql.split(' WHERE ', 1)[1], sql)
+            self.assertIn("COUNT(DISTINCT NULLIF(encounter_number, ''))", sql)
+            self.assertIn(f"{flag} = 'Y'", sql)
+            self.assertIn('public.diagnosis_dashboard_data', sql)
+            self.assertIn('$__timeFilter(created_date)', sql)
+            self.assertNotIn('getopdconsultatationDepartmentwiseonly', sql)
         self.assertNotIn('district', DASHBOARD.read_text().lower())
 
     def test_other_metrics_follow_dashboard_filters(self):
-        for title in ('New patients', 'Patient visits', 'Diagnosis records'):
+        for title in ('New patients', 'Patient visits', 'Diagnosis records',
+                      'Provisional encounters', 'Final encounters'):
             sql = self.panels[title]['targets'][0]['rawSql']
             self.assertIn('$__timeFilter(created_date)', sql)
             for variable in ('unit', 'year', 'month'):

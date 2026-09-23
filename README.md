@@ -11,10 +11,12 @@ synthetic Python telemetry service.
 - Most panels use `public.diagnosis_dashboard_data` and follow dashboard time,
   unit, year, and month filters. “New patients” counts distinct UHIDs in the
   selection; it does **not** identify first-ever patient registrations.
-- “Patient counts”, “Provisional encounters”, and “Final encounters” use
-  `public.getopdconsultatationDepartmentwiseonly`, fixed to 1 July–20 September
-  2026 and `unit_id = 9`, excluding names matching Demo, Palak Singh, or
-  Shubham Yede. These three cards do **not** follow dashboard filters.
+- “Patient counts” uses `public.getopdconsultatationDepartmentwiseonly`, fixed
+  to 1 July–20 September 2026 and `unit_id = 9`, excluding names matching Demo,
+  Palak Singh, or Shubham Yede. This card does **not** follow dashboard filters.
+- “Provisional encounters” and “Final encounters” count distinct encounter
+  numbers with `is_provisional = 'Y'` or `is_final = 'Y'` respectively in
+  `public.diagnosis_dashboard_data`; they follow dashboard filters.
 - Dashboard file: `provisioning/dashboards/public-health-dashboard.json`
 
 The dashboard is aggregate-only. It does not select patient names, UHIDs, or

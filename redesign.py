@@ -36,7 +36,7 @@ def text(title, content, y, h=2):
     p['transparent']=True
     p['options']={'mode':'markdown','content':content}
 
-text('', '# Public health · Executive overview\nDiagnosis activity and patient composition in one place. **Use the filters above to explore.** Patient counts and encounter status below use a fixed date range and unit.',0,3)
+text('', '# Public health · Executive overview\nDiagnosis activity and patient composition in one place. **Use the filters above to explore.** Patient counts alone uses a fixed date range and unit.',0,3)
 metrics=[('Diagnosis records','COUNT(*)'),('New patients',"COUNT(DISTINCT NULLIF(uhid_number, ''))"),('Patient visits',"COUNT(DISTINCT NULLIF(encounter_number, ''))"),('Patient counts',None),('Health units',"COUNT(DISTINCT NULLIF(unit_name, ''))"),('Diagnosis types',"COUNT(DISTINCT NULLIF(diagnosis_desc, ''))")]
 for i,(title,expr) in enumerate(metrics):
     if title == 'Patient counts':
@@ -46,12 +46,12 @@ for i,(title,expr) in enumerate(metrics):
         sql=f'SELECT {expr} AS value FROM {source} WHERE {where}'
         description='Within the selected period and filters. New patients are distinct UHIDs; patient visits are distinct recorded encounter numbers in the diagnosis data.'
     panel(title,'stat',i*4,3,4,4,sql,colors[i],description)
-text('', '### Activity & encounter status\nDaily diagnosis volumes follow dashboard filters. Encounter status uses unit 9, 1 Jul–20 Sep 2026.',7)
+text('', '### Activity & encounter status\nDaily diagnosis volumes and encounter status follow dashboard filters.',7)
 sql=f"WITH days AS (SELECT generate_series(date_trunc('day', $__timeFrom()::timestamp), date_trunc('day', $__timeTo()::timestamp), interval '1 day') AS time), counts AS (SELECT date_trunc('day',created_date) AS time, COUNT(*)::float AS records, COUNT(DISTINCT uhid_number)::float AS patients FROM {source} WHERE {where} GROUP BY 1) SELECT days.time, COALESCE(records,0) AS \"Diagnosis records\", COALESCE(patients,0) AS \"Daily new patients (distinct UHIDs)\" FROM days LEFT JOIN counts USING(time) ORDER BY 1"
 panel('Daily activity','timeseries',0,9,16,8,sql,description='Zero-filled days. Daily distinct UHIDs must not be summed to obtain period distinct UHIDs.')
 for i,(title,flag) in enumerate([('Provisional encounters','is_provisional'),('Final encounters','is_final')]):
-    status_sql=f"SELECT COUNT(DISTINCT encounter_id) FILTER (WHERE lower(coalesce({flag}::text, '')) IN ('true','t','1','y','yes')) AS value FROM {visit_source} WHERE {visit_where}"
-    panel(title,'stat',16,9+i*4,8,4,status_sql,colors[1+i], 'Distinct OPD encounter IDs flagged as this status; 1 Jul–20 Sep 2026, unit 9, excluding specified test names. Flags can overlap. Not controlled by dashboard filters.')
+    status_sql=f"SELECT COUNT(DISTINCT NULLIF(encounter_number, '')) FILTER (WHERE {flag} = 'Y') AS value FROM {source} WHERE {where}"
+    panel(title,'stat',16,9+i*4,8,4,status_sql,colors[1+i], 'Distinct encounter numbers flagged as this diagnosis status within the selected dashboard period and filters.')
 text('', '### Where activity is concentrated\nTop diagnoses reflect recorded diagnosis volume, not population-adjusted disease rates.',17)
 panel('Top diagnoses','barchart',0,19,24,9,f"SELECT COALESCE(NULLIF(diagnosis_desc,''),'Unknown') AS label, COUNT(*)::bigint AS \"Records\" FROM {source} WHERE {where} GROUP BY 1 ORDER BY 2 DESC,1 LIMIT 10",colors[1])
 text('', '### Patient & service composition\nDemographics show diagnosis-record distribution; a patient can contribute multiple records.',28)

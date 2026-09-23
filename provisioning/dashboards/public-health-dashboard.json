@@ -36,7 +36,7 @@
       "transparent": true,
       "options": {
         "mode": "markdown",
-        "content": "# Public health \u00b7 Executive overview\nDiagnosis activity and patient composition in one place. **Use the filters above to explore.** Patient counts and encounter status below use a fixed date range and unit."
+        "content": "# Public health \u00b7 Executive overview\nDiagnosis activity and patient composition in one place. **Use the filters above to explore.** Patient counts alone uses a fixed date range and unit."
       }
     },
     {
@@ -395,7 +395,7 @@
       "transparent": true,
       "options": {
         "mode": "markdown",
-        "content": "### Activity & encounter status\nDaily diagnosis volumes follow dashboard filters. Encounter status uses unit 9, 1 Jul\u201320 Sep 2026."
+        "content": "### Activity & encounter status\nDaily diagnosis volumes and encounter status follow dashboard filters."
       }
     },
     {
@@ -472,7 +472,7 @@
         "w": 8,
         "h": 4
       },
-      "description": "Distinct OPD encounter IDs flagged as this status; 1 Jul\u201320 Sep 2026, unit 9, excluding specified test names. Flags can overlap. Not controlled by dashboard filters.",
+      "description": "Distinct encounter numbers flagged as this diagnosis status within the selected dashboard period and filters.",
       "datasource": {
         "type": "postgres",
         "uid": "his-qa-postgres"
@@ -484,7 +484,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COUNT(DISTINCT encounter_id) FILTER (WHERE lower(coalesce(is_provisional::text, '')) IN ('true','t','1','y','yes')) AS value FROM public.getopdconsultatationDepartmentwiseonly WHERE CAST(encounter_date AS date) BETWEEN DATE '2026-07-01' AND DATE '2026-09-20' AND unit_id = 9 AND NOT (patientname LIKE '%Demo%' OR patientname LIKE '%Palak Singh%' OR patientname LIKE '%Shubham Yede%')",
+          "rawSql": "SELECT COUNT(DISTINCT NULLIF(encounter_number, '')) FILTER (WHERE is_provisional = 'Y') AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
           "rawQuery": true,
           "format": "table"
         }
@@ -529,7 +529,7 @@
         "w": 8,
         "h": 4
       },
-      "description": "Distinct OPD encounter IDs flagged as this status; 1 Jul\u201320 Sep 2026, unit 9, excluding specified test names. Flags can overlap. Not controlled by dashboard filters.",
+      "description": "Distinct encounter numbers flagged as this diagnosis status within the selected dashboard period and filters.",
       "datasource": {
         "type": "postgres",
         "uid": "his-qa-postgres"
@@ -541,7 +541,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COUNT(DISTINCT encounter_id) FILTER (WHERE lower(coalesce(is_final::text, '')) IN ('true','t','1','y','yes')) AS value FROM public.getopdconsultatationDepartmentwiseonly WHERE CAST(encounter_date AS date) BETWEEN DATE '2026-07-01' AND DATE '2026-09-20' AND unit_id = 9 AND NOT (patientname LIKE '%Demo%' OR patientname LIKE '%Palak Singh%' OR patientname LIKE '%Shubham Yede%')",
+          "rawSql": "SELECT COUNT(DISTINCT NULLIF(encounter_number, '')) FILTER (WHERE is_final = 'Y') AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
           "rawQuery": true,
           "format": "table"
         }
@@ -1196,6 +1196,6 @@
   "timezone": "browser",
   "title": "Public Health Dashboard",
   "uid": "public-health-dashboard",
-  "version": 5,
+  "version": 6,
   "weekStart": ""
 }
