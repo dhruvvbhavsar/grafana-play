@@ -36,7 +36,7 @@
       "transparent": true,
       "options": {
         "mode": "markdown",
-        "content": "# Public health \u00b7 Executive overview\nDistrict coverage, diagnosis activity and patient composition in one place. **Use the filters above to explore.**"
+        "content": "# Public health \u00b7 Executive overview\nDiagnosis activity and patient composition in one place. **Use the filters above to explore.** Patient counts and encounter status below use a fixed date range and unit."
       }
     },
     {
@@ -49,7 +49,7 @@
         "w": 4,
         "h": 4
       },
-      "description": "Within the selected period and filters. Encounters are distinct recorded encounter identifiers; diagnosis records are not visit counts.",
+      "description": "Within the selected period and filters. New patients are distinct UHIDs; patient visits are distinct recorded encounter numbers in the diagnosis data.",
       "datasource": {
         "type": "postgres",
         "uid": "his-qa-postgres"
@@ -61,7 +61,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COUNT(*) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
+          "rawSql": "SELECT COUNT(*) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
           "rawQuery": true,
           "format": "table"
         }
@@ -98,7 +98,7 @@
     },
     {
       "id": 3,
-      "title": "Unique patients",
+      "title": "New patients",
       "type": "stat",
       "gridPos": {
         "x": 4,
@@ -106,7 +106,7 @@
         "w": 4,
         "h": 4
       },
-      "description": "Within the selected period and filters. Encounters are distinct recorded encounter identifiers; diagnosis records are not visit counts.",
+      "description": "Within the selected period and filters. New patients are distinct UHIDs; patient visits are distinct recorded encounter numbers in the diagnosis data.",
       "datasource": {
         "type": "postgres",
         "uid": "his-qa-postgres"
@@ -118,7 +118,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COUNT(DISTINCT NULLIF(uhid_number, '')) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
+          "rawSql": "SELECT COUNT(DISTINCT NULLIF(uhid_number, '')) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
           "rawQuery": true,
           "format": "table"
         }
@@ -155,7 +155,7 @@
     },
     {
       "id": 4,
-      "title": "Recorded encounters",
+      "title": "Patient visits",
       "type": "stat",
       "gridPos": {
         "x": 8,
@@ -163,7 +163,7 @@
         "w": 4,
         "h": 4
       },
-      "description": "Within the selected period and filters. Encounters are distinct recorded encounter identifiers; diagnosis records are not visit counts.",
+      "description": "Within the selected period and filters. New patients are distinct UHIDs; patient visits are distinct recorded encounter numbers in the diagnosis data.",
       "datasource": {
         "type": "postgres",
         "uid": "his-qa-postgres"
@@ -175,7 +175,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COUNT(DISTINCT NULLIF(encounter_number, '')) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
+          "rawSql": "SELECT COUNT(DISTINCT NULLIF(encounter_number, '')) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
           "rawQuery": true,
           "format": "table"
         }
@@ -212,7 +212,7 @@
     },
     {
       "id": 5,
-      "title": "Districts",
+      "title": "Patient counts",
       "type": "stat",
       "gridPos": {
         "x": 12,
@@ -220,7 +220,7 @@
         "w": 4,
         "h": 4
       },
-      "description": "Within the selected period and filters. Encounters are distinct recorded encounter identifiers; diagnosis records are not visit counts.",
+      "description": "Patient visits from the OPD consultation view, 1 Jul\u201320 Sep 2026, unit 9, excluding the specified test names. Not controlled by dashboard filters.",
       "datasource": {
         "type": "postgres",
         "uid": "his-qa-postgres"
@@ -232,7 +232,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COUNT(DISTINCT NULLIF(district_name, '')) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
+          "rawSql": "SELECT COUNT(encounter_id) AS value FROM public.getopdconsultatationDepartmentwiseonly WHERE CAST(encounter_date AS date) BETWEEN DATE '2026-07-01' AND DATE '2026-09-20' AND unit_id = 9 AND NOT (patientname LIKE '%Demo%' OR patientname LIKE '%Palak Singh%' OR patientname LIKE '%Shubham Yede%')",
           "rawQuery": true,
           "format": "table"
         }
@@ -277,7 +277,7 @@
         "w": 4,
         "h": 4
       },
-      "description": "Within the selected period and filters. Encounters are distinct recorded encounter identifiers; diagnosis records are not visit counts.",
+      "description": "Within the selected period and filters. New patients are distinct UHIDs; patient visits are distinct recorded encounter numbers in the diagnosis data.",
       "datasource": {
         "type": "postgres",
         "uid": "his-qa-postgres"
@@ -289,7 +289,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COUNT(DISTINCT NULLIF(unit_name, '')) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
+          "rawSql": "SELECT COUNT(DISTINCT NULLIF(unit_name, '')) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
           "rawQuery": true,
           "format": "table"
         }
@@ -334,7 +334,7 @@
         "w": 4,
         "h": 4
       },
-      "description": "Within the selected period and filters. Encounters are distinct recorded encounter identifiers; diagnosis records are not visit counts.",
+      "description": "Within the selected period and filters. New patients are distinct UHIDs; patient visits are distinct recorded encounter numbers in the diagnosis data.",
       "datasource": {
         "type": "postgres",
         "uid": "his-qa-postgres"
@@ -346,7 +346,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COUNT(DISTINCT NULLIF(diagnosis_desc, '')) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
+          "rawSql": "SELECT COUNT(DISTINCT NULLIF(diagnosis_desc, '')) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
           "rawQuery": true,
           "format": "table"
         }
@@ -395,7 +395,7 @@
       "transparent": true,
       "options": {
         "mode": "markdown",
-        "content": "### Activity & change\nDaily volumes and the change from the preceding equal-length period."
+        "content": "### Activity & encounter status\nDaily diagnosis volumes follow dashboard filters. Encounter status uses unit 9, 1 Jul\u201320 Sep 2026."
       }
     },
     {
@@ -408,7 +408,7 @@
         "w": 16,
         "h": 8
       },
-      "description": "Zero-filled days. Daily unique patients must not be summed to obtain period unique patients.",
+      "description": "Zero-filled days. Daily distinct UHIDs must not be summed to obtain period distinct UHIDs.",
       "datasource": {
         "type": "postgres",
         "uid": "his-qa-postgres"
@@ -420,7 +420,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "WITH days AS (SELECT generate_series(date_trunc('day', $__timeFrom()::timestamp), date_trunc('day', $__timeTo()::timestamp), interval '1 day') AS time), counts AS (SELECT date_trunc('day',created_date) AS time, COUNT(*)::float AS records, COUNT(DISTINCT uhid_number)::float AS patients FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1) SELECT days.time, COALESCE(records,0) AS \"Diagnosis records\", COALESCE(patients,0) AS \"Daily unique patients\" FROM days LEFT JOIN counts USING(time) ORDER BY 1",
+          "rawSql": "WITH days AS (SELECT generate_series(date_trunc('day', $__timeFrom()::timestamp), date_trunc('day', $__timeTo()::timestamp), interval '1 day') AS time), counts AS (SELECT date_trunc('day',created_date) AS time, COUNT(*)::float AS records, COUNT(DISTINCT uhid_number)::float AS patients FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1) SELECT days.time, COALESCE(records,0) AS \"Diagnosis records\", COALESCE(patients,0) AS \"Daily new patients (distinct UHIDs)\" FROM days LEFT JOIN counts USING(time) ORDER BY 1",
           "rawQuery": true,
           "format": "time_series"
         }
@@ -464,7 +464,7 @@
     },
     {
       "id": 10,
-      "title": "Records \u00b7 period change",
+      "title": "Provisional encounters",
       "type": "stat",
       "gridPos": {
         "x": 16,
@@ -472,7 +472,7 @@
         "w": 8,
         "h": 4
       },
-      "description": "Compared with the preceding interval of equal duration. All filters also apply to the baseline; calendar filters may exclude it. No baseline is shown when the previous count is zero.",
+      "description": "Distinct OPD encounter IDs flagged as this status; 1 Jul\u201320 Sep 2026, unit 9, excluding specified test names. Flags can overlap. Not controlled by dashboard filters.",
       "datasource": {
         "type": "postgres",
         "uid": "his-qa-postgres"
@@ -484,20 +484,21 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "WITH c AS (SELECT COUNT(*) FILTER (WHERE $__timeFilter(created_date))::float AS current, COUNT(*) FILTER (WHERE created_date >= $__timeFrom()::timestamp - ($__timeTo()::timestamp - $__timeFrom()::timestamp) AND created_date < $__timeFrom()::timestamp)::float AS previous FROM public.diagnosis_dashboard_data WHERE ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') AND created_date >= $__timeFrom()::timestamp - ($__timeTo()::timestamp - $__timeFrom()::timestamp) AND created_date <= $__timeTo()::timestamp) SELECT 100.0*(current-previous)/NULLIF(previous,0) AS value FROM c",
+          "rawSql": "SELECT COUNT(DISTINCT encounter_id) FILTER (WHERE lower(coalesce(is_provisional::text, '')) IN ('true','t','1','y','yes')) AS value FROM public.getopdconsultatationDepartmentwiseonly WHERE CAST(encounter_date AS date) BETWEEN DATE '2026-07-01' AND DATE '2026-09-20' AND unit_id = 9 AND NOT (patientname LIKE '%Demo%' OR patientname LIKE '%Palak Singh%' OR patientname LIKE '%Shubham Yede%')",
           "rawQuery": true,
           "format": "table"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "percent",
-          "decimals": 1,
+          "unit": "short",
+          "decimals": 0,
+          "min": 0,
           "color": {
             "mode": "fixed",
             "fixedColor": "#73A7FF"
           },
-          "noValue": "No baseline"
+          "noValue": "No records"
         },
         "overrides": []
       },
@@ -520,7 +521,7 @@
     },
     {
       "id": 11,
-      "title": "Latest record in selection",
+      "title": "Final encounters",
       "type": "stat",
       "gridPos": {
         "x": 16,
@@ -528,7 +529,7 @@
         "w": 8,
         "h": 4
       },
-      "description": "Latest source record, not the browser refresh time. Source timestamp has no timezone.",
+      "description": "Distinct OPD encounter IDs flagged as this status; 1 Jul\u201320 Sep 2026, unit 9, excluding specified test names. Flags can overlap. Not controlled by dashboard filters.",
       "datasource": {
         "type": "postgres",
         "uid": "his-qa-postgres"
@@ -540,19 +541,19 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT to_char(MAX(created_date),'DD Mon YYYY HH24:MI') AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
+          "rawSql": "SELECT COUNT(DISTINCT encounter_id) FILTER (WHERE lower(coalesce(is_final::text, '')) IN ('true','t','1','y','yes')) AS value FROM public.getopdconsultatationDepartmentwiseonly WHERE CAST(encounter_date AS date) BETWEEN DATE '2026-07-01' AND DATE '2026-09-20' AND unit_id = 9 AND NOT (patientname LIKE '%Demo%' OR patientname LIKE '%Palak Singh%' OR patientname LIKE '%Shubham Yede%')",
           "rawQuery": true,
           "format": "table"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "string",
+          "unit": "short",
           "decimals": 0,
           "min": 0,
           "color": {
             "mode": "fixed",
-            "fixedColor": "#56D9C9"
+            "fixedColor": "#B99AFF"
           },
           "noValue": "No records"
         },
@@ -571,7 +572,7 @@
           "values": false
         },
         "text": {
-          "valueSize": 22
+          "valueSize": 36
         }
       }
     },
@@ -589,17 +590,17 @@
       "transparent": true,
       "options": {
         "mode": "markdown",
-        "content": "### Where activity is concentrated\nRankings reflect recorded diagnosis volume, not population-adjusted disease rates."
+        "content": "### Where activity is concentrated\nTop diagnoses reflect recorded diagnosis volume, not population-adjusted disease rates."
       }
     },
     {
       "id": 13,
-      "title": "District ranking",
+      "title": "Top diagnoses",
       "type": "barchart",
       "gridPos": {
         "x": 0,
         "y": 19,
-        "w": 12,
+        "w": 24,
         "h": 9
       },
       "description": "",
@@ -614,7 +615,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COALESCE(NULLIF(district_name,''),'Unknown') AS label, COUNT(*)::bigint AS \"Records\" FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1 ORDER BY 2 DESC,1 LIMIT 10",
+          "rawSql": "SELECT COALESCE(NULLIF(diagnosis_desc,''),'Unknown') AS label, COUNT(*)::bigint AS \"Records\" FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1 ORDER BY 2 DESC,1 LIMIT 10",
           "rawQuery": true,
           "format": "table"
         }
@@ -626,7 +627,7 @@
           "min": 0,
           "color": {
             "mode": "fixed",
-            "fixedColor": "#56D9C9"
+            "fixedColor": "#73A7FF"
           },
           "noValue": "No records"
         },
@@ -650,62 +651,6 @@
     },
     {
       "id": 14,
-      "title": "Top diagnoses",
-      "type": "barchart",
-      "gridPos": {
-        "x": 12,
-        "y": 19,
-        "w": 12,
-        "h": 9
-      },
-      "description": "",
-      "datasource": {
-        "type": "postgres",
-        "uid": "his-qa-postgres"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "postgres",
-            "uid": "his-qa-postgres"
-          },
-          "rawSql": "SELECT COALESCE(NULLIF(diagnosis_desc,''),'Unknown') AS label, COUNT(*)::bigint AS \"Records\" FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1 ORDER BY 2 DESC,1 LIMIT 10",
-          "rawQuery": true,
-          "format": "table"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "decimals": 0,
-          "min": 0,
-          "color": {
-            "mode": "fixed",
-            "fixedColor": "#73A7FF"
-          },
-          "noValue": "No records"
-        },
-        "overrides": []
-      },
-      "options": {
-        "orientation": "horizontal",
-        "barRadius": 0.15,
-        "barWidth": 0.65,
-        "groupWidth": 0.75,
-        "showValue": "always",
-        "stacking": "none",
-        "legend": {
-          "showLegend": false
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    },
-    {
-      "id": 15,
       "title": "",
       "type": "text",
       "gridPos": {
@@ -722,7 +667,7 @@
       }
     },
     {
-      "id": 16,
+      "id": 15,
       "title": "Gender \u00b7 record distribution",
       "type": "piechart",
       "gridPos": {
@@ -743,7 +688,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COALESCE(NULLIF(gender_name,''),'Unknown') AS label, COUNT(*) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1 ORDER BY 2 DESC",
+          "rawSql": "SELECT COALESCE(NULLIF(gender_name,''),'Unknown') AS label, COUNT(*) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1 ORDER BY 2 DESC",
           "rawQuery": true,
           "format": "table"
         }
@@ -786,7 +731,7 @@
       }
     },
     {
-      "id": 17,
+      "id": 16,
       "title": "Age \u00b7 record distribution",
       "type": "barchart",
       "gridPos": {
@@ -807,7 +752,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT CASE WHEN btrim(ageyear) ~ '^[0-9]+([.][0-9]+)?$' THEN CASE WHEN btrim(ageyear)::numeric < 18 THEN '0\u201317' WHEN btrim(ageyear)::numeric < 35 THEN '18\u201334' WHEN btrim(ageyear)::numeric < 60 THEN '35\u201359' WHEN btrim(ageyear)::numeric <= 120 THEN '60+' ELSE 'Unknown' END ELSE 'Unknown' END AS label,COUNT(*) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1 ORDER BY 1",
+          "rawSql": "SELECT CASE WHEN btrim(ageyear) ~ '^[0-9]+([.][0-9]+)?$' THEN CASE WHEN btrim(ageyear)::numeric < 18 THEN '0\u201317' WHEN btrim(ageyear)::numeric < 35 THEN '18\u201334' WHEN btrim(ageyear)::numeric < 60 THEN '35\u201359' WHEN btrim(ageyear)::numeric <= 120 THEN '60+' ELSE 'Unknown' END ELSE 'Unknown' END AS label,COUNT(*) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1 ORDER BY 1",
           "rawQuery": true,
           "format": "table"
         }
@@ -842,7 +787,7 @@
       }
     },
     {
-      "id": 18,
+      "id": 17,
       "title": "Specialty \u00b7 records",
       "type": "barchart",
       "gridPos": {
@@ -863,7 +808,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COALESCE(NULLIF(speciality_name,''),'Unknown') AS label,COUNT(*) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1 ORDER BY 2 DESC LIMIT 8",
+          "rawSql": "SELECT COALESCE(NULLIF(speciality_name,''),'Unknown') AS label,COUNT(*) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1 ORDER BY 2 DESC LIMIT 8",
           "rawQuery": true,
           "format": "table"
         }
@@ -898,7 +843,7 @@
       }
     },
     {
-      "id": 19,
+      "id": 18,
       "title": "",
       "type": "text",
       "gridPos": {
@@ -915,7 +860,7 @@
       }
     },
     {
-      "id": 20,
+      "id": 19,
       "title": "Disease category counts",
       "type": "barchart",
       "gridPos": {
@@ -936,7 +881,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "WITH selected AS (SELECT * FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')) SELECT 'Communicable' AS label,COUNT(*) FILTER (WHERE is_communicable='Y') AS value FROM selected UNION ALL SELECT 'Non-communicable' AS label,COUNT(*) FILTER (WHERE is_non_communicable='Y') AS value FROM selected UNION ALL SELECT 'Notifiable' AS label,COUNT(*) FILTER (WHERE is_notifiable='Y') AS value FROM selected UNION ALL SELECT 'Vector-borne' AS label,COUNT(*) FILTER (WHERE is_vector_borne='Y') AS value FROM selected UNION ALL SELECT 'Occupational' AS label,COUNT(*) FILTER (WHERE is_occupational_notifiable='Y') AS value FROM selected",
+          "rawSql": "WITH selected AS (SELECT * FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')) SELECT 'Communicable' AS label,COUNT(*) FILTER (WHERE is_communicable='Y') AS value FROM selected UNION ALL SELECT 'Non-communicable' AS label,COUNT(*) FILTER (WHERE is_non_communicable='Y') AS value FROM selected UNION ALL SELECT 'Notifiable' AS label,COUNT(*) FILTER (WHERE is_notifiable='Y') AS value FROM selected UNION ALL SELECT 'Vector-borne' AS label,COUNT(*) FILTER (WHERE is_vector_borne='Y') AS value FROM selected UNION ALL SELECT 'Occupational' AS label,COUNT(*) FILTER (WHERE is_occupational_notifiable='Y') AS value FROM selected",
           "rawQuery": true,
           "format": "table"
         }
@@ -971,7 +916,7 @@
       }
     },
     {
-      "id": 21,
+      "id": 20,
       "title": "Category trends",
       "type": "timeseries",
       "gridPos": {
@@ -992,7 +937,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT date_trunc('day',created_date) AS time,COUNT(*) FILTER (WHERE is_communicable='Y')::float AS \"Communicable\", COUNT(*) FILTER (WHERE is_non_communicable='Y')::float AS \"Non-communicable\", COUNT(*) FILTER (WHERE is_notifiable='Y')::float AS \"Notifiable\", COUNT(*) FILTER (WHERE is_vector_borne='Y')::float AS \"Vector-borne\", COUNT(*) FILTER (WHERE is_occupational_notifiable='Y')::float AS \"Occupational\" FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1 ORDER BY 1",
+          "rawSql": "SELECT date_trunc('day',created_date) AS time,COUNT(*) FILTER (WHERE is_communicable='Y')::float AS \"Communicable\", COUNT(*) FILTER (WHERE is_non_communicable='Y')::float AS \"Non-communicable\", COUNT(*) FILTER (WHERE is_notifiable='Y')::float AS \"Notifiable\", COUNT(*) FILTER (WHERE is_vector_borne='Y')::float AS \"Vector-borne\", COUNT(*) FILTER (WHERE is_occupational_notifiable='Y')::float AS \"Occupational\" FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}') GROUP BY 1 ORDER BY 1",
           "rawQuery": true,
           "format": "time_series"
         }
@@ -1035,7 +980,7 @@
       }
     },
     {
-      "id": 22,
+      "id": 21,
       "title": "",
       "type": "text",
       "gridPos": {
@@ -1052,13 +997,13 @@
       }
     },
     {
-      "id": 23,
-      "title": "Missing district",
+      "id": 22,
+      "title": "Missing gender",
       "type": "stat",
       "gridPos": {
         "x": 0,
         "y": 51,
-        "w": 8,
+        "w": 12,
         "h": 3
       },
       "description": "",
@@ -1073,7 +1018,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COUNT(*) FILTER (WHERE NULLIF(btrim(district_name),'') IS NULL) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
+          "rawSql": "SELECT COUNT(*) FILTER (WHERE NULLIF(btrim(gender_name),'') IS NULL) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
           "rawQuery": true,
           "format": "table"
         }
@@ -1109,70 +1054,13 @@
       }
     },
     {
-      "id": 24,
-      "title": "Missing gender",
-      "type": "stat",
-      "gridPos": {
-        "x": 8,
-        "y": 51,
-        "w": 8,
-        "h": 3
-      },
-      "description": "",
-      "datasource": {
-        "type": "postgres",
-        "uid": "his-qa-postgres"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "postgres",
-            "uid": "his-qa-postgres"
-          },
-          "rawSql": "SELECT COUNT(*) FILTER (WHERE NULLIF(btrim(gender_name),'') IS NULL) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
-          "rawQuery": true,
-          "format": "table"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "decimals": 0,
-          "min": 0,
-          "color": {
-            "mode": "fixed",
-            "fixedColor": "#FFCB70"
-          },
-          "noValue": "No records"
-        },
-        "overrides": []
-      },
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "center",
-        "textMode": "value",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "valueSize": 36
-        }
-      }
-    },
-    {
-      "id": 25,
+      "id": 23,
       "title": "Missing diagnosis",
       "type": "stat",
       "gridPos": {
-        "x": 16,
+        "x": 12,
         "y": 51,
-        "w": 8,
+        "w": 12,
         "h": 3
       },
       "description": "",
@@ -1187,7 +1075,7 @@
             "type": "postgres",
             "uid": "his-qa-postgres"
           },
-          "rawSql": "SELECT COUNT(*) FILTER (WHERE NULLIF(btrim(diagnosis_desc),'') IS NULL) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${district}' = 'All' OR district_name = '${district}') AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
+          "rawSql": "SELECT COUNT(*) FILTER (WHERE NULLIF(btrim(diagnosis_desc),'') IS NULL) AS value FROM public.diagnosis_dashboard_data WHERE $__timeFilter(created_date) AND ('${unit}' = 'All' OR unit_name = '${unit}') AND ('${year}' = 'All' OR to_char(created_date, 'YYYY') = '${year}') AND ('${month}' = 'All' OR to_char(created_date, 'YYYY-MM') = '${month}')",
           "rawQuery": true,
           "format": "table"
         }
@@ -1232,28 +1120,6 @@
   ],
   "templating": {
     "list": [
-      {
-        "allValue": "All",
-        "current": {
-          "selected": true,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "type": "postgres",
-          "uid": "his-qa-postgres"
-        },
-        "definition": "SELECT DISTINCT district_name AS __value, district_name AS __text FROM public.diagnosis_dashboard_data WHERE district_name IS NOT NULL ORDER BY 1",
-        "includeAll": true,
-        "label": "District",
-        "name": "district",
-        "options": [],
-        "query": "SELECT DISTINCT district_name AS __value, district_name AS __text FROM public.diagnosis_dashboard_data WHERE district_name IS NOT NULL ORDER BY 1",
-        "refresh": 2,
-        "skipUrlSync": false,
-        "sort": 1,
-        "type": "query"
-      },
       {
         "allValue": "All",
         "current": {
@@ -1330,6 +1196,6 @@
   "timezone": "browser",
   "title": "Public Health Dashboard",
   "uid": "public-health-dashboard",
-  "version": 3,
+  "version": 5,
   "weekStart": ""
 }

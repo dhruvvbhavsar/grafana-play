@@ -6,13 +6,21 @@ synthetic Python telemetry service.
 
 ## Dashboard
 
-- **Public Health Dashboard** - district disease tracker, weekly patient
-  visits, summary stats, and disease-category charts.
-- Source relation: `public.diagnosis_dashboard_data`
+- **Public Health Dashboard** - diagnosis activity, patient/visit summaries,
+  OPD encounter status, and disease-category charts.
+- Most panels use `public.diagnosis_dashboard_data` and follow dashboard time,
+  unit, year, and month filters. “New patients” counts distinct UHIDs in the
+  selection; it does **not** identify first-ever patient registrations.
+- “Patient counts”, “Provisional encounters”, and “Final encounters” use
+  `public.getopdconsultatationDepartmentwiseonly`, fixed to 1 July–20 September
+  2026 and `unit_id = 9`, excluding names matching Demo, Palak Singh, or
+  Shubham Yede. These three cards do **not** follow dashboard filters.
 - Dashboard file: `provisioning/dashboards/public-health-dashboard.json`
 
 The dashboard is aggregate-only. It does not select patient names, UHIDs, or
 health numbers.
+
+Run dashboard structure checks with `python3 -m unittest test_dashboard`.
 
 ## Recommended deployment: Docker Compose
 
